@@ -1,4 +1,4 @@
 from TaipanCode.Fileman.Display import images
-import os
+import os, sys
 
-image_count = 15
+image_len = 10
