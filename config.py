@@ -16,3 +16,6 @@ elif UserSys == "Linux":
 
 else:
     raise("Uknown user OS")
+
+folder_path = ""
+image_file_path = ""
