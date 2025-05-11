@@ -6,6 +6,12 @@ import config
 
 path = input("Input file path\n>")
 
+valid_ext = [".png", ".jpeg", ".jpg", ".tiff", ".bmp"]
+def valid_image():
+    _, ext = os.path.splitext(path)
+    return ext.lower() in valid_ext
+
+
 if os.path.exists(path):
     if os.path.exists(config.folder_path):
         os_index = 1
