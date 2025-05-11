@@ -9,14 +9,14 @@ path = input("Input file path\n>")
 if os.path.exists(path):
     if os.path.exists(config.folder_path):
         os_index = 1
-        while os.path.exists(os.join(config.folder_path, f"TaipanImage{os_index}")):
+        while os.path.exists(os.path.join(config.folder_path, f"TaipanImage{os_index}")):
             os_index += 1
 
             if os_index > 99:
                 print ("Storage memory exceeded or folder does not exist [red]TME (Taipan Memory Error)[/red]")
-                raise ("TME error memory exceeded")
+                raise RuntimeError("TME error memory exceeded")
 
-        joined_image_path = os.join(config.folder_path(("TaipanImage" + str(os_index))))
+        joined_image_path = os.path.join(config.folder_path, ("TaipanImage" + str(os_index)))
         
         shutil.move(path, joined_image_path)
         if os.path.exists(joined_image_path):
@@ -25,9 +25,9 @@ if os.path.exists(path):
 
         else:
             print ("File was not uploaded succesfully[red]TFE (Taipan File Error)[/red]")
-            raise ("TFE upload unsuccesful")
+            raise RuntimeError("TFE upload unsuccesful")
     
 
 else:
     print ("File path does not exist [red]TFE (Taipan File Error)[/red]")
-    raise ("TFE error path does not exist")
+    raise FileNotFoundError("TFE error path does not exist")
