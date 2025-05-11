@@ -7,7 +7,6 @@ user_sys = platform.system()
 username = None
 directory_path = None
 image_directory_path = None
-image_count = 0
 image_list = []
 
 if user_sys == "Windows":
@@ -58,3 +57,12 @@ elif user_sys == "Linux":
 else:
     raise("Uknown user OS")
 
+screen = None
+screen_width = 0
+screen_height = 0
+
+image_count = len(image_list)
+image_index = 0
+
+blit_x = None
+blit_y = None
