@@ -1,6 +1,7 @@
 import os, PIL, shutil, sys
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../.."))
 sys.path.append(project_root)
+import PIL.Image
 from rich import print
 import config
 
@@ -10,6 +11,11 @@ valid_ext = [".png", ".jpeg", ".jpg", ".tiff", ".bmp"]
 def valid_image():
     _, ext = os.path.splitext(path)
     return ext.lower() in valid_ext
+
+def png_convert(output_path):
+    if valid_image():
+        with PIL.Image.open(path) as img:
+            img.save(output_path, format="PNG")
 
 
 if os.path.exists(path):
