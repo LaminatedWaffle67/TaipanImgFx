@@ -7,10 +7,14 @@ import config
 
 path = input("Input file path\n>")
 
-valid_ext = [".png", ".jpeg", ".jpg", ".tiff", ".bmp"]
+valid_ext = [".png", ".jpeg", ".jpg", ".tiff", ".bmp", ".webp"]
 def valid_image():
     _, ext = os.path.splitext(path)
-    return ext.lower() in valid_ext
+    if ext.lower() in valid_ext:
+        return 1
+    else:
+        print (f"Non valid file extension {ext} [red]TFE (Taipan File Error)[/red]")
+        raise ValueError("TFE Non available file extension")
 
 def png_convert(output_path):
     if valid_image():
@@ -20,10 +24,10 @@ def png_convert(output_path):
 
 if os.path.exists(path):
     print(f"{path} exists")
-    if os.path.exists(config.folder_path):
-        print(f"{config.folder_path} exists")
+    if os.path.exists(config.image_directory_path):
+        print(f"{config.image_directory_path} exists")
         os_index = 1
-        while os.path.exists(os.path.join(config.folder_path, f"TaipanImage{os_index}")):
+        while os.path.exists(os.path.join(config.image_directory_path, f"TaipanImage{os_index}")):
             print(f"{os_index}")
             os_index += 1
 
@@ -31,7 +35,7 @@ if os.path.exists(path):
                 print ("Error: Storage memory limit exceeded [red]TME (Taipan Memory Error)[/red]")
                 raise RuntimeError("TME error memory exceeded")
 
-        joined_image_path = os.path.join(config.folder_path, ("TaipanImage" + str(os_index)))
+        joined_image_path = os.path.join(config.image_directory_path, ("TaipanImage" + str(os_index) + ".png"))
         
         png_convert(joined_image_path)
         if os.path.exists(joined_image_path):
@@ -40,6 +44,7 @@ if os.path.exists(path):
 
         else:
             print ("Error: File was not uploaded successfully [red]TFE (Taipan File Error)[/red]")
+            print (f"joined_image_path: {joined_image_path}\npath: {path}\nos_index: {os_index}\nconfig.image_directory_path: {config.image_directory_path}")
             raise RuntimeError("TFE upload unsuccesful")
     
 
