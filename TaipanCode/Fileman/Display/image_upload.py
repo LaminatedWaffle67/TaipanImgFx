@@ -1,4 +1,4 @@
-import os, pygame, PIL, shutil, sys
+import os, PIL, shutil, sys
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../.."))
 sys.path.append(project_root)
 from rich import print
@@ -13,18 +13,18 @@ if os.path.exists(path):
             os_index += 1
 
             if os_index > 99:
-                print ("Storage memory exceeded or folder does not exist [red]TME (Taipan Memory Error)[/red]")
+                print ("Storage memory exceeded [red]TME (Taipan Memory Error)[/red]")
                 raise RuntimeError("TME error memory exceeded")
 
         joined_image_path = os.path.join(config.folder_path, ("TaipanImage" + str(os_index)))
         
         shutil.move(path, joined_image_path)
         if os.path.exists(joined_image_path):
-            print(f"[green] Image succesfully uploaded to {joined_image_path}[/green]")
+            print(f"[green]Image successfully uploaded to {joined_image_path}[/green]")
 
 
         else:
-            print ("File was not uploaded succesfully[red]TFE (Taipan File Error)[/red]")
+            print ("File was not uploaded successfully [red]TFE (Taipan File Error)[/red]")
             raise RuntimeError("TFE upload unsuccesful")
     
 
