@@ -19,18 +19,21 @@ def png_convert(output_path):
 
 
 if os.path.exists(path):
+    print(f"{path} exists")
     if os.path.exists(config.folder_path):
+        print(f"{config.folder_path} exists")
         os_index = 1
         while os.path.exists(os.path.join(config.folder_path, f"TaipanImage{os_index}")):
+            print(f"{os_index}")
             os_index += 1
 
             if os_index > 99:
                 print ("Error: Storage memory limit exceeded [red]TME (Taipan Memory Error)[/red]")
                 raise RuntimeError("TME error memory exceeded")
 
-        joined_image_path = os.path.join(config.folder_path, ("TaipanImage" + str(os_index) + ".png"))
+        joined_image_path = os.path.join(config.folder_path, ("TaipanImage" + str(os_index)))
         
-        shutil.move(path, joined_image_path)
+        png_convert(joined_image_path)
         if os.path.exists(joined_image_path):
             print(f"[green]Image successfully uploaded to {joined_image_path}[/green]")
 
