@@ -1,7 +1,8 @@
 import pygame, os, sys
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../.."))
 sys.path.append(project_root)
-import config, storage
+import config
+from TaipanCode.Fileman import storage
 from rich import print
 
 pygame.init()

@@ -18,7 +18,13 @@ if user_sys == "Windows":
     if os.path.exists(image_directory_path):
         listed_image_files = os.listdir(image_directory_path)
 
-        for image_path in listed_image_files:
+        png_images = []
+        for image_check in listed_image_files:
+            _, ext = os.path.splitext(image_check)
+            if ext.lower() == ".png":
+                png_images.append(image_check)
+
+        for image_path in png_images:
             image_file_path = os.path.join(image_directory_path, image_path)
             image_list.append(image_file_path)
 
@@ -31,8 +37,14 @@ elif user_sys == "Darwin":
 
     if os.path.exists(image_directory_path):
         listed_image_files = os.listdir(image_directory_path)
+        png_images = []
+        for image_check in listed_image_files:
+            _, ext = os.path.splitext(image_check)
+            if ext.lower() == ".png":
+                png_images.append(image_check)
+        
 
-        for image_path in listed_image_files:
+        for image_path in png_images:
             image_file_path = os.path.join(image_directory_path, image_path)
             image_list.append(image_file_path)
 
@@ -43,11 +55,17 @@ elif user_sys == "Linux":
     image_folder_path = "TaipanCode/Fileman/Display/images"
 
     image_directory_path = os.path.join(directory_path, image_folder_path)
-
+    
     if os.path.exists(image_directory_path):
         listed_image_files = os.listdir(image_directory_path)
 
-        for image_path in listed_image_files:
+        png_images = []
+        for image_check in listed_image_files:
+            _, ext = os.path.splitext(image_check)
+            if ext.lower() == ".png":
+                png_images.append(image_check)
+
+        for image_path in png_images:
             image_file_path = os.path.join(image_directory_path, image_path)
             image_list.append(image_file_path)
 
