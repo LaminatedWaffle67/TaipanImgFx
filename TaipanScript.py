@@ -14,6 +14,7 @@ config.screen = pygame.display.set_mode((config.screen_width, config.screen_heig
 screen = config.screen
 
 import TaipanCode.AllEffects.edit as edit
+import TaipanCode.AllEffects.color as color
 
 '''User input for image handling'''
 image_upload = 0
@@ -44,6 +45,7 @@ display.load_image()
 
 '''User chosen effects'''
 edit.clear(255)
+color.invert()
 '''User chosen effects'''
 
 '''Image displaying'''
