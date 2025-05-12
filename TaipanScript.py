@@ -13,7 +13,7 @@ config.screen = pygame.display.set_mode((config.screen_width, config.screen_heig
 
 screen = config.screen
 
-import TaipanCode.AllEffects.spatial as spatial
+import TaipanCode.AllEffects.edit as edit
 
 '''User input for image handling'''
 image_upload = 0
@@ -43,7 +43,7 @@ display.load_image()
 '''User input for image handling'''
 
 '''User chosen effects'''
-spatial.clear(255)
+edit.clear(255)
 '''User chosen effects'''
 
 '''Image displaying'''
