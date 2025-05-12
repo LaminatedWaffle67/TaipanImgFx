@@ -1,6 +1,8 @@
 from TaipanCode.Fileman.Display import images
 import os, platform
 
+bg_color = (0, 0, 0)
+
 user_sys = platform.system()
 username = None
 directory_path = None
@@ -74,8 +76,8 @@ else:
     raise("Uknown user OS")
 
 screen = None
-screen_width = 0
-screen_height = 0
+screen_width = 800
+screen_height = 800
 
 image_count = len(image_list)
 image_index = 0
