@@ -15,13 +15,19 @@ image_index = (int(input(f"Pick an image index from 0-{config.image_count}")), i
 
 if image_index[0] > config.image_count:
     image_index == config.image_count
+    config.image_index = image_index
 
 elif image_index[0] < 0:
     image_index = 0
+    config.image_index = image_index
 
 if image_index[1] < 0:
     image_index[1] = 0
+    config.save_option = False
 
 elif image_index[1] > 1:
     image_index[1] = 1
+    config.save_option = True
+
+
 

@@ -1,8 +1,6 @@
 from TaipanCode.Fileman.Display import images
 import os, platform
 
-
-
 user_sys = platform.system()
 username = None
 directory_path = None
@@ -66,3 +64,5 @@ image_index = 0
 
 blit_x = None
 blit_y = None
+
+save_option = 0 
