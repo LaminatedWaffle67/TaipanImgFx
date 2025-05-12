@@ -1,11 +1,13 @@
-import TaipanCode.Fileman as Fileman
-import TaipanCode.Fileman.Display as Display
-import TaipanCode.Fileman.image_man as image_man
-import TaipanCode.Fileman.storage as storage
+'''Needed imports'''
+import TaipanCode
+import TaipanCode.Fileman
+import TaipanCode.Fileman.Display
+import TaipanCode.Fileman.Display.display
 import config, pygame, os
-
+'''Needed imports'''
 
 pygame.init()
+'''User input for image handling'''
 image_upload = 0
 if image_upload:
     import TaipanCode.Fileman.Display.image_upload as upload
@@ -28,6 +30,8 @@ if image_index[1] < 0:
 elif image_index[1] > 1:
     image_index[1] = 1
     config.save_option = True
+'''User input for image handling'''
 
-
-
+'''Image displaying'''
+TaipanCode.Fileman.Display.display()
+'''Image displaying'''
