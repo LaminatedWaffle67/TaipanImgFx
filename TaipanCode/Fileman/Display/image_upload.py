@@ -13,7 +13,7 @@ def valid_image():
     if ext.lower() in valid_ext:
         return 1
     else:
-        print (f"Non valid file extension {ext} [red]TFE (Taipan File Error)[/red]")
+        print (f"Error: Non valid file extension {ext} [red]TFE (Taipan File Error)[/red]")
         raise ValueError("TFE Non available file extension")
 
 def png_convert(output_path):
@@ -27,7 +27,7 @@ if os.path.exists(path):
     if os.path.exists(config.image_directory_path):
         print(f"{config.image_directory_path} exists")
         os_index = 1
-        while os.path.exists(os.path.join(config.image_directory_path, f"TaipanImage{os_index}")):
+        while os.path.exists(os.path.join(config.image_directory_path, f"TaipanImage{os_index}.png")):
             print(f"{os_index}")
             os_index += 1
 

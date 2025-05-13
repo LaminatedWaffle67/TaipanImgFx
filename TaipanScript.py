@@ -9,6 +9,8 @@ import config, pygame, os
 pygame.init()
 config.screen_width = 800
 config.screen_height = 800
+config.blit_x = 0
+config.blit_y = 0
 config.screen = pygame.display.set_mode((config.screen_width, config.screen_height))
 
 screen = config.screen
@@ -18,7 +20,7 @@ import TaipanCode.AllEffects.color as color
 import TaipanCode.AllEffects.spatial as spatial
 
 '''User input for image handling'''
-image_upload = 0
+image_upload = 1
 if image_upload:
     import TaipanCode.Fileman.Display.image_upload as upload
 
@@ -45,7 +47,7 @@ display.load_image()
 '''User input for image handling'''
 
 '''User chosen effects'''
-spatial.transpose()
+color.isolate(True, False, True, 2)
 '''User chosen effects'''
 
 '''Image displaying'''
