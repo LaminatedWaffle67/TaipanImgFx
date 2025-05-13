@@ -7,11 +7,15 @@ import config
 
 path = input("Input file path\n>")
 
-valid_ext = [".png", ".jpeg", ".jpg", ".tiff", ".bmp", ".webp"]
+valid_ext = [".jpeg", ".jpg", ".tiff", ".bmp", ".webp"]
 def valid_image():
     _, ext = os.path.splitext(path)
     if ext.lower() in valid_ext:
         return 1
+    
+    elif ext.lower() == ".png":
+        return 0
+    
     else:
         print (f"Error: Non valid file extension {ext} [red]TFE (Taipan File Error)[/red]")
         raise ValueError("TFE Non available file extension")
