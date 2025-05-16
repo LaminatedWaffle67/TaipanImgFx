@@ -20,7 +20,7 @@ import TaipanCode.AllEffects.color as color
 import TaipanCode.AllEffects.spatial as spatial
 
 '''User input for image handling'''
-image_upload = 1
+image_upload = 0
 if image_upload:
     import TaipanCode.Fileman.Display.image_upload as upload
 
@@ -47,7 +47,8 @@ display.load_image()
 '''User input for image handling'''
 
 '''User chosen effects'''
-color.isolate(True, False, True, 2)
+edit.clear(255)
+color.contrast()
 '''User chosen effects'''
 
 '''Image displaying'''
