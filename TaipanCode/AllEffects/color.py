@@ -31,6 +31,7 @@ def invert(red_strength: int=255, green_strength: int=255, blue_strength: int=25
         screen.set_at((pos), (color))
 
     pygame.display.update()
+    config.constructor.append(f"color.invert({red_strength}, {green_strength}, {blue_strength})")
 
 
 def black_and_white(exclude_red: bool=False, exclude_green: bool=False, exclude_blue: bool=False) -> None:
@@ -55,6 +56,7 @@ def black_and_white(exclude_red: bool=False, exclude_green: bool=False, exclude_
         screen.set_at((pos), (color))
 
     pygame.display.update()
+    config.constructor.append(f"color.invert({exclude_red}, {exclude_green}, {exclude_blue})")
 
 
 def isolate(exclude_red: bool=True, exclude_green: bool=False, exclude_blue: bool=False, option_index: int=1):
@@ -117,6 +119,7 @@ def isolate(exclude_red: bool=True, exclude_green: bool=False, exclude_blue: boo
         screen.set_at((pos), (color))
 
     pygame.display.update()
+    config.constructor.append(f"color.invert({exclude_red}, {exclude_green}, {exclude_blue}, {option_index})")
 
 def contrast(low_thresh: int=200, high_thresh: int=765, fill_color: tuple=(255, 255, 255), replace_color: tuple=config.bg_color):
     color_list = []
@@ -137,3 +140,4 @@ def contrast(low_thresh: int=200, high_thresh: int=765, fill_color: tuple=(255, 
     for color, pos in color_list:
         screen.set_at((pos), color)
     pygame.display.update()
+    config.constructor.append(f"color.invert({low_thresh}, {high_thresh}, {fill_color}, {replace_color})")

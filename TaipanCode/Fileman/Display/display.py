@@ -15,8 +15,14 @@ def pygame_display() -> None:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 if config.save_option:
-                    current_stored_image = storage.save()
-                    print (f"Image successfully saved at {current_stored_image}")
+                    try:
+                        save_confirmation = int(input("Type 1 to confirm save\n>"))
+                        if save_confirmation == 1:
+                            current_stored_image = storage.download_screen()
+                            print (f"Image successfully saved at {current_stored_image}")
+                    except TypeError:
+                        pass
+                    
 
                 running = False
 
@@ -26,7 +32,7 @@ def pygame_display() -> None:
 def load_image() -> None:
     '''Will add PEP 257 docstrings soon'''
     screen = config.screen
-    joined_path = os.path.join(config.image_directory_path, f"TaipanImage{config.image_index}.png")
+    joined_path = os.path.join(config.image_directory_path, f"TaipanImage{config.image_index}.png") if config.save_option == 1 else os.path.join(config.download_image_directory_path, f"TaipanDownloadImage{config.image_index}.png")
 
     try:
         current_image = pygame.image.load(joined_path)
