@@ -32,14 +32,28 @@ def pygame_display() -> None:
 def load_image() -> None:
     '''Will add PEP 257 docstrings soon'''
     screen = config.screen
-    joined_path = os.path.join(config.image_directory_path, f"TaipanImage{config.image_index}.png") if config.save_option == 1 else os.path.join(config.download_image_directory_path, f"TaipanDownloadImage{config.image_index}.png")
+    if config.save_option == 1:
+        image_joined_path = os.path.join(config.image_directory_path, f"TaipanImage{config.image_index}.png")
+    
+    elif config.save_option == 0:
+        image_joined_path = os.path.join(config.download_image_directory_path, f"TaipanDownloadImage{config.image_index}.png")
+        
+        try:
+            constructor_joined_path = os.path.join(config.download_image_directory_path, f"TaipanDownloadConstructor{config.image_index}.txt")
+
+            with open(constructor_joined_path, "r") as file:
+                for line in file:
+                    print (line)
+
+        except:
+            print ("Don't know what error this raises, will check later.")
 
     try:
-        current_image = pygame.image.load(joined_path)
+        current_image = pygame.image.load(image_joined_path)
 
     except FileNotFoundError:
-        print (f"Chosen image path is invalid {joined_path} [red]TFE (Taipan File Error)[/red]")
-        raise RuntimeError(f"TFE Chosen image path is invalid {joined_path}")
+        print (f"Chosen image path is invalid {image_joined_path} [red]TFE (Taipan File Error)[/red]")
+        raise RuntimeError(f"TFE Chosen image path is invalid {image_joined_path}")
 
     if config.blit_x is None:
         config.blit_x = 0

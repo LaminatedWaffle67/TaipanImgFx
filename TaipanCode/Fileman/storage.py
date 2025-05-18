@@ -20,8 +20,8 @@ def find_valid_path():
                 raise RuntimeError("TME error memory exceeded")
 
         joined_image_path = os.path.join(config.download_image_directory_path, ("TaipanDownloadImage" + str(os_index) + ".png"))
-        joined_image_path = os.path.join(config.download_image_directory_path, ("TaipanDownloadConstructor" + str(os_index) + ".txt"))
-        return joined_image_path
+        joined_constructor_path = os.path.join(config.download_image_directory_path, ("TaipanDownloadConstructor" + str(os_index) + ".txt"))
+        return joined_image_path, joined_constructor_path
     
     else:
         print (f"Error: File path ({config.download_image_directory_path}) does not exist [red]TFE (Taipan File Error)[/red]")
@@ -33,8 +33,13 @@ def download_screen():
     screen = config.screen
     image_save_file, constructor_save_file = find_valid_path()
     pygame.image.save(screen, image_save_file)
+    print (config.constructor)
     with open(constructor_save_file, "w") as file:
         file.write(config.constructor)
+    with open(constructor_save_file, "r") as file:
+        print ("hi")
+        print(file.read())
+        print ("bye")
 
     return str(image_save_file)
     
