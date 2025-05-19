@@ -25,10 +25,10 @@ if image_upload:
     import TaipanCode.Fileman.Display.image_upload as upload
 
 user_input = 1
-image_index = (int(input(f"Pick an image index from 1-{config.image_count}")), int(input(f"Pick 1 to have a save option and 0 for no option."))) if user_input == 0 else (1, 0)
+image_index = (int(input(f"Pick an image index from 1-{config.image_count}")), int(input(f"Pick 1 to have a save option and 0 for no option."))) if user_input == 0 else (5, 0)
 
 if image_index[0] > config.image_count:
-    image_index[0] == config.image_count
+    image_index[0] = config.image_count
 
 elif image_index[0] < 1:
     image_index[0] = 1
@@ -42,13 +42,13 @@ if image_index[1] < 0:
 elif image_index[1] > 1:
     image_index[1] = 1
 
-config.save_option = False if image_index == 0 else True
+config.save_option = False if image_index[1] == 0 else True
 display.load_image()
 '''User input for image handling'''
 
 '''User chosen effects'''
-edit.clear(255)
-color.contrast()
+edit.clear(700)
+color.isolate(True, False, False, 2)
 '''User chosen effects'''
 
 '''Image displaying'''

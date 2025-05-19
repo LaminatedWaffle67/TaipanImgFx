@@ -32,10 +32,10 @@ def pygame_display() -> None:
 def load_image() -> None:
     '''Will add PEP 257 docstrings soon'''
     screen = config.screen
-    if config.save_option == 1:
+    if config.image_index >= 1:
         image_joined_path = os.path.join(config.image_directory_path, f"TaipanImage{config.image_index}.png")
     
-    elif config.save_option == 0:
+    elif config.image_index == 0:
         image_joined_path = os.path.join(config.download_image_directory_path, f"TaipanDownloadImage{config.image_index}.png")
         
         try:
