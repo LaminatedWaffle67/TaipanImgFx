@@ -1,17 +1,56 @@
 import pygame, sys, os
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
 sys.path.append(project_root)
-import config
+import config, numpy
 from rich import print
 
 screen = config.screen
 screen_width, screen_height = config.screen_width, config.screen_height
 
+def new_invert(red_strength: float=1.0, green_strength: float=1.0, blue_strength: float=1.0):
+    if red_strength > 1.0:
+        red_strength = 1.0
+        print(f"Keep parameters to 0.0-1.0, you had a red_strength of {red_strength}")
+    
+    if red_strength < 0.0:
+        red_strength = 0.0
+        print(f"Keep parameters to 0.0-1.0, you had a red_strength of {red_strength}")
+
+    if green_strength > 1.0:
+        green_strength = 1.0
+        print(f"Keep parameters to 0.0-1.0, you had a green_strength of {green_strength}")
+
+    if green_strength < 0.0:
+        green_strength = 0.0
+        print(f"Keep parameters to 0.0-1.0, you had a green_strength of {green_strength}")
+
+    if blue_strength > 1.0:
+        blue_strength = 1.0
+        print(f"Keep parameters to 0.0-1.0, you had a blue_strength of {blue_strength}")
+
+    if blue_strength < 0.0:
+        blue_strength = 0.0
+        print(f"Keep parameters to 0.0-1.0, you had a blue_strength of {blue_strength}")
+
+
+    screen_numpy_arr = pygame.surfarray.array3d(screen)
+    bg_arr = numpy.array(config.bg_color, dtype = screen_numpy_arr.dtype)
+
+    masked_arr = numpy.any(screen_numpy_arr != bg_arr, axis=2)
+    inverted_arr = screen_numpy_arr.astype(dtype=numpy.float32).copy()
+    
+    inverted_arr[masked_arr, 0] = screen_numpy_arr[masked_arr, 0] * (1 - 2 * red_strength) + 255 * red_strength
+    inverted_arr[masked_arr, 1] = screen_numpy_arr[masked_arr, 1] * (1 - 2 * green_strength) + 255 * green_strength
+    inverted_arr[masked_arr, 2] = screen_numpy_arr[masked_arr, 2] * (1 - 2 * blue_strength) + 255 * blue_strength
+
+    screen_numpy_arr[masked_arr] = numpy.clip(inverted_arr[masked_arr], 0, 255).astype(numpy.uint8)
+
+
 def invert(red_strength: int=255, green_strength: int=255, blue_strength: int=255):
     color_list = []
 
-    for x in range(0, screen_width, 1):
-        for y in range(0, screen_width, 1):
+    for x in range(0, screen_width, 2):
+        for y in range(0, screen_width, 2):
             red, green, blue, _ = screen.get_at((x, y))
 
             if (red, green, blue) != config.bg_color:

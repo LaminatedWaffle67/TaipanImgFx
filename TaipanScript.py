@@ -48,7 +48,7 @@ display.load_image()
 
 '''User chosen effects'''
 edit.clear(700)
-color.isolate(True, False, False, 2)
+color.invert()
 '''User chosen effects'''
 
 '''Image displaying'''
