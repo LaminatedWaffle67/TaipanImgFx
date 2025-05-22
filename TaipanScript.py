@@ -48,7 +48,7 @@ display.load_image()
 
 '''User chosen effects'''
 edit.clear(700)
-color.np_invert(0.5, 0.4, 1.0)
+color.np_black_and_white(True)
 '''User chosen effects'''
 
 '''Image displaying'''

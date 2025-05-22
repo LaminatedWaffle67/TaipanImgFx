@@ -7,7 +7,7 @@ from rich import print
 screen = config.screen
 screen_width, screen_height = config.screen_width, config.screen_height
 
-def np_invert(red_strength: float=1.0, green_strength: float=1.0, blue_strength: float=1.0):
+def np_invert(red_strength: float=1.0, green_strength: float=1.0, blue_strength: float=1.0) -> None:
 
     red_strength = numpy.clip(red_strength, 0.0, 1.0)
     green_strength = numpy.clip(green_strength, 0.0, 1.0)
@@ -29,9 +29,10 @@ def np_invert(red_strength: float=1.0, green_strength: float=1.0, blue_strength:
 
     pygame.surfarray.blit_array(screen, screen_numpy_arr)
     pygame.display.update()
+    config.constructor.append(f"color.np_invert({red_strength}, {green_strength}, {blue_strength})\n")
 
 
-def invert(red_strength: int=255, green_strength: int=255, blue_strength: int=255, effect_x_step: int=1, effect_y_step: int=1):
+def invert(red_strength: int=255, green_strength: int=255, blue_strength: int=255, effect_x_step: int=1, effect_y_step: int=1) -> None:
     color_list = []
 
     for x in range(0, screen_width, effect_x_step):
@@ -57,6 +58,32 @@ def invert(red_strength: int=255, green_strength: int=255, blue_strength: int=25
     pygame.display.update()
     config.constructor.append(f"color.invert({red_strength}, {green_strength}, {blue_strength})\n")
 
+def np_black_and_white(exclude_red: bool=False, exclude_green: bool=False, exclude_blue: bool=False) -> None:
+    screen_numpy_arr = pygame.surfarray.array3d(screen)
+    bg_arr = numpy.array(config.bg_color, dtype = screen_numpy_arr.dtype)
+
+    masked_arr = numpy.any(screen_numpy_arr != bg_arr, axis=2)
+    greyscale_arr = screen_numpy_arr.astype(dtype=numpy.float32).copy()
+
+    brightness = (screen_numpy_arr[:, :, 0] * 0.3) + (screen_numpy_arr[:, :, 1] * 0.6) + (screen_numpy_arr[:, :, 2] * 0.1)
+    
+    if not exclude_red:
+        greyscale_arr[..., 0][masked_arr] = brightness[masked_arr]
+
+    if not exclude_green:
+        greyscale_arr[..., 1][masked_arr] = brightness[masked_arr]
+
+    if not exclude_blue:
+        greyscale_arr[..., 2][masked_arr] = brightness[masked_arr]
+
+    greyscale_arr = numpy.clip(greyscale_arr, 0, 255).astype(numpy.uint8)
+
+    screen_numpy_arr[masked_arr] = greyscale_arr[masked_arr]
+
+    pygame.surfarray.blit_array(screen, screen_numpy_arr)
+    pygame.display.update()
+    config.constructor.append(f"color.np_black_and_white({exclude_red}, {exclude_green}, {exclude_blue})\n")
+
 
 def black_and_white(exclude_red: bool=False, exclude_green: bool=False, exclude_blue: bool=False) -> None:
     color_list = []
@@ -80,7 +107,7 @@ def black_and_white(exclude_red: bool=False, exclude_green: bool=False, exclude_
         screen.set_at((pos), (color))
 
     pygame.display.update()
-    config.constructor.append(f"color.invert({exclude_red}, {exclude_green}, {exclude_blue})\n")
+    config.constructor.append(f"color.black_and_white({exclude_red}, {exclude_green}, {exclude_blue})\n")
 
 
 def isolate(exclude_red: bool=True, exclude_green: bool=False, exclude_blue: bool=False, option_index: int=1):
