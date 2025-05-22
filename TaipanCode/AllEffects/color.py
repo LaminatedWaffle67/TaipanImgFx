@@ -8,31 +8,10 @@ screen = config.screen
 screen_width, screen_height = config.screen_width, config.screen_height
 
 def np_invert(red_strength: float=1.0, green_strength: float=1.0, blue_strength: float=1.0):
-    print("hi")
-    if red_strength > 1.0:
-        red_strength = 1.0
-        print(f"Keep parameters to 0.0-1.0, you had a red_strength of {red_strength}")
-    
-    if red_strength < 0.0:
-        red_strength = 0.0
-        print(f"Keep parameters to 0.0-1.0, you had a red_strength of {red_strength}")
 
-    if green_strength > 1.0:
-        green_strength = 1.0
-        print(f"Keep parameters to 0.0-1.0, you had a green_strength of {green_strength}")
-
-    if green_strength < 0.0:
-        green_strength = 0.0
-        print(f"Keep parameters to 0.0-1.0, you had a green_strength of {green_strength}")
-
-    if blue_strength > 1.0:
-        blue_strength = 1.0
-        print(f"Keep parameters to 0.0-1.0, you had a blue_strength of {blue_strength}")
-
-    if blue_strength < 0.0:
-        blue_strength = 0.0
-        print(f"Keep parameters to 0.0-1.0, you had a blue_strength of {blue_strength}")
-
+    red_strength = numpy.clip(red_strength, 0.0, 1.0)
+    green_strength = numpy.clip(green_strength, 0.0, 1.0)
+    blue_strength = numpy.clip(blue_strength, 0.0, 1.0)
 
     screen_numpy_arr = pygame.surfarray.array3d(screen)
     bg_arr = numpy.array(config.bg_color, dtype = screen_numpy_arr.dtype)
