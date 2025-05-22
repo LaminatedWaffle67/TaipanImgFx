@@ -7,7 +7,8 @@ from rich import print
 screen = config.screen
 screen_width, screen_height = config.screen_width, config.screen_height
 
-def new_invert(red_strength: float=1.0, green_strength: float=1.0, blue_strength: float=1.0):
+def np_invert(red_strength: float=1.0, green_strength: float=1.0, blue_strength: float=1.0):
+    print("hi")
     if red_strength > 1.0:
         red_strength = 1.0
         print(f"Keep parameters to 0.0-1.0, you had a red_strength of {red_strength}")
@@ -43,14 +44,19 @@ def new_invert(red_strength: float=1.0, green_strength: float=1.0, blue_strength
     inverted_arr[masked_arr, 1] = screen_numpy_arr[masked_arr, 1] * (1 - 2 * green_strength) + 255 * green_strength
     inverted_arr[masked_arr, 2] = screen_numpy_arr[masked_arr, 2] * (1 - 2 * blue_strength) + 255 * blue_strength
 
-    screen_numpy_arr[masked_arr] = numpy.clip(inverted_arr[masked_arr], 0, 255).astype(numpy.uint8)
+    inverted_arr = numpy.clip(inverted_arr, 0, 255).astype(numpy.uint8)
+
+    screen_numpy_arr[masked_arr] = inverted_arr[masked_arr]
+
+    pygame.surfarray.blit_array(screen, screen_numpy_arr)
+    pygame.display.update()
 
 
-def invert(red_strength: int=255, green_strength: int=255, blue_strength: int=255):
+def invert(red_strength: int=255, green_strength: int=255, blue_strength: int=255, effect_x_step: int=1, effect_y_step: int=1):
     color_list = []
 
-    for x in range(0, screen_width, 2):
-        for y in range(0, screen_width, 2):
+    for x in range(0, screen_width, effect_x_step):
+        for y in range(0, screen_width, effect_y_step):
             red, green, blue, _ = screen.get_at((x, y))
 
             if (red, green, blue) != config.bg_color:
@@ -180,3 +186,4 @@ def contrast(low_thresh: int=200, high_thresh: int=765, fill_color: tuple=(255, 
         screen.set_at((pos), color)
     pygame.display.update()
     config.constructor.append(f"color.invert({low_thresh}, {high_thresh}, {fill_color}, {replace_color})\n")
+
