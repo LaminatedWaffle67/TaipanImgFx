@@ -9,8 +9,8 @@ import config, pygame, os
 pygame.init()
 config.screen_width = 800
 config.screen_height = 800
-config.blit_x = 0
-config.blit_y = 0
+config.blit_x = 150
+config.blit_y = 40
 config.screen = pygame.display.set_mode((config.screen_width, config.screen_height))
 
 screen = config.screen
@@ -25,7 +25,7 @@ if image_upload:
     import TaipanCode.Fileman.Display.image_upload as upload
 
 user_input = 1
-image_index = (int(input(f"Pick an image index from 1-{config.image_count}")), int(input(f"Pick 1 to have a save option and 0 for no option."))) if user_input == 0 else (2, 0)
+image_index = (int(input(f"Pick an image index from 1-{config.image_count}")), int(input(f"Pick 1 to have a save option and 0 for no option."))) if user_input == 0 else (7, 1)
 
 if image_index[0] > config.image_count:
     image_index[0] = config.image_count
@@ -47,8 +47,10 @@ display.load_image()
 '''User input for image handling'''
 
 '''User chosen effects'''
-edit.clear(700)
-color.np_black_and_white(True)
+
+color.isolate(True, True, True, 2)
+color.np_invert()
+spatial.transpose()
 '''User chosen effects'''
 
 '''Image displaying'''

@@ -172,6 +172,25 @@ def isolate(exclude_red: bool=True, exclude_green: bool=False, exclude_blue: boo
     pygame.display.update()
     config.constructor.append(f"color.invert({exclude_red}, {exclude_green}, {exclude_blue}, {option_index})\n")
 
+
+def np_contrast():
+    screen_numpy_arr = pygame.surfarray.array3d(screen)
+    
+    bg_numpy_arr = numpy.array(config.bg_color, dtype=numpy.uint8)
+
+    bg_mask = numpy.any(screen_numpy_arr != bg_numpy_arr, axis=2)
+
+    brightness = numpy.sum(screen_numpy_arr, axis=2)
+
+    contrast_array = numpy.where(brightness > 200, 255, 0).astype(dtype=numpy.uint8)
+
+    screen_numpy_arr[..., 0][bg_mask] = contrast_array[bg_mask]
+    screen_numpy_arr[..., 1][bg_mask] = contrast_array[bg_mask]
+    screen_numpy_arr[..., 2][bg_mask] = contrast_array[bg_mask]
+
+    pygame.surfarray.blit_array(screen, screen_numpy_arr)
+    pygame.display.update()
+
 def contrast(low_thresh: int=200, high_thresh: int=765, fill_color: tuple=(255, 255, 255), replace_color: tuple=config.bg_color):
     color_list = []
 
