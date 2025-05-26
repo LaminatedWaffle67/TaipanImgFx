@@ -6,7 +6,7 @@ import config
 screen = config.screen
 screen_width, screen_height = config.screen_width, config.screen_height
 
-def transpose() -> None:
+def transpose(option_index: int=1) -> None:
     color_list = []
 
     for x in range(0, screen_width, 1):
@@ -17,20 +17,34 @@ def transpose() -> None:
             if (red, green, blue) != config.bg_color:
                 brightest_channel = max(red, green, blue)
 
-                if brightest_channel == red:
-                    green = 255 - blue
-                    blue = 255 - green
-                    x_position -= red
+                if option_index == 1:
+                    if brightest_channel == red:
+                        green = 255 - blue
+                        blue = 255 - green
+                        x_position -= red
 
-                elif brightest_channel == green:
-                    red = 255 - blue
-                    blue = 255 - red
-                    y_position += green
+                    elif brightest_channel == green:
+                        red = 255 - blue
+                        blue = 255 - red
+                        y_position += green
 
-                elif brightest_channel == blue:
-                    red = 255 - green
-                    green = 255 - red
-                    y_position -= blue
+                    elif brightest_channel == blue:
+                        red = 255 - green
+                        green = 255 - red
+                        y_position -= blue
+
+                elif option_index == 2:
+                    if brightest_channel == red:
+                        green = 255 - blue
+                        blue = 255 - green
+
+                    elif brightest_channel == green:
+                        red = 255 - blue
+                        blue = 255 - red
+
+                    elif brightest_channel == blue:
+                        red = 255 - green
+                        green = 255 - red
 
                 color_list.append(((red, green, blue), (x_position, y_position)))
 

@@ -50,7 +50,9 @@ display.load_image()
 
 color.isolate(True, True, True, 2)
 color.np_invert()
-spatial.transpose()
+spatial.transpose(2)
+color.isolate(False, True, True, 1)
+color.isolate(True, False, False, 2)
 '''User chosen effects'''
 
 '''Image displaying'''
