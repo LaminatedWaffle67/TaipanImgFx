@@ -5,9 +5,24 @@ import PIL.Image
 from rich import print
 import config
 
+os.system('clear')
 path = input("Input file path\n>")
 
-valid_ext = [".jpeg", ".jpg", ".tiff", ".bmp", ".webp"]
+valid_ext = [".jpeg", ".jpg", ".tiff", ".bmp", ".webp", ".png"]
+_, ext = os.path.splitext(path)
+ext = ext.lower()
+print (f"[red]Error: Unsupported file extension '{ext}'\nThe supported image extensions are {valid_ext} !TFE - Taipan File Error![/red]\n")
+if input("Input y if you want to attempt to continue despite the error.\n>").lower() == "y":
+    pass
+else:
+    print("\n---PRE---ERROR---HISTORY---\n")
+    try:
+        raise ValueError(f"TFE Unsupported file extension '{ext}'.\nTry checking the file path and extension.\nIf the file format is unsupported you may be able to convert it using online tools.")
+
+    except ValueError as e:
+        print (f"Error: {e}")
+        sys.exit()
+
 def valid_image():
     _, ext = os.path.splitext(path)
     if ext.lower() in valid_ext:
@@ -17,8 +32,8 @@ def valid_image():
         return 0
     
     else:
-        print (f"Error: Non valid file extension {ext} [red]TFE (Taipan File Error)[/red]")
-        raise ValueError("TFE Non available file extension")
+        pass
+        
 
 def png_convert(output_path):
     if valid_image():
@@ -36,7 +51,7 @@ if os.path.exists(path):
             os_index += 1
 
             if os_index > 99:
-                print ("Error: Storage memory limit exceeded [red]TME (Taipan Memory Error)[/red]")
+                print ("Error: Storage memory limit exceeded, the limit is 99 files saved [red]TME (Taipan Memory Error)[/red]")
                 raise RuntimeError("TME error memory exceeded")
 
         joined_image_path = os.path.join(config.image_directory_path, ("TaipanImage" + str(os_index) + ".png"))
