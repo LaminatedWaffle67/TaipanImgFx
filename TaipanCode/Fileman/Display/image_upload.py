@@ -9,9 +9,6 @@ os.system('clear')
 path = input("Input file path\n>")
 
 valid_ext = [".jpeg", ".jpg", ".tiff", ".bmp", ".webp", ".png"]
-_, ext = os.path.splitext(path)
-ext = ext.lower()
-
 
 def valid_image():
     _, ext = os.path.splitext(path)

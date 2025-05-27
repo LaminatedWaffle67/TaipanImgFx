@@ -30,18 +30,26 @@ def find_valid_path():
 
 
 def download_screen():
-    screen = config.screen
-    image_save_file, constructor_save_file = find_valid_path()
-    pygame.image.save(screen, image_save_file)
-    print (config.constructor)
-    with open(constructor_save_file, "w") as file:
-        file.write(config.constructor)
-    with open(constructor_save_file, "r") as file:
-        print ("hi")
-        print(file.read())
-        print ("bye")
+    try:
+        print("st")
+        screen = config.screen
+        image_save_file, constructor_save_file = find_valid_path()
+        pygame.image.save(screen, image_save_file)
+        print (config.constructor)
+        print("pr")
+        with open(constructor_save_file, "w") as file:
+            file.write(str(config.constructor))
+        print("bf")
+        with open(constructor_save_file, "r") as file:
+            print ("hi")
+            print(file.read())
+            print ("bye")
+        print("af")
 
-    return str(image_save_file)
+        return str(image_save_file)
+
+    except Exception as e:
+        print(f"Error: {e}")
     
 
 
