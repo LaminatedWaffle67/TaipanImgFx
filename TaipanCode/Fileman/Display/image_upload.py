@@ -11,28 +11,32 @@ path = input("Input file path\n>")
 valid_ext = [".jpeg", ".jpg", ".tiff", ".bmp", ".webp", ".png"]
 _, ext = os.path.splitext(path)
 ext = ext.lower()
-print (f"[red]Error: Unsupported file extension '{ext}'\nThe supported image extensions are {valid_ext} !TFE - Taipan File Error![/red]\n")
-if input("Input y if you want to attempt to continue despite the error.\n>").lower() == "y":
-    pass
-else:
-    print("\n---PRE---ERROR---HISTORY---\n")
-    try:
-        raise ValueError(f"TFE Unsupported file extension '{ext}'.\nTry checking the file path and extension.\nIf the file format is unsupported you may be able to convert it using online tools.")
 
-    except ValueError as e:
-        print (f"Error: {e}")
-        sys.exit()
 
 def valid_image():
     _, ext = os.path.splitext(path)
-    if ext.lower() in valid_ext:
+    ext = ext.lower()
+    if ext in valid_ext and ext != ".png":
         return 1
     
-    elif ext.lower() == ".png":
+    if ext == ".png":
         return 0
     
     else:
-        pass
+        print (f"[red]Error: Unsupported file extension '{ext}'\nThe supported image extensions are {valid_ext} !TFE - Taipan File Error![/red]\n")
+        
+        if input("Input y if you want to attempt to continue despite the error.\n>").lower() == "y":
+            return 1
+
+        else:
+            print("\n---PRE---ERROR---HISTORY---\n")
+
+            try:
+                raise ValueError(f"TFE Unsupported file extension '{ext}'.\nTry checking the file path and extension.\nIf the file format is unsupported you may be able to convert it using online tools.")
+
+            except ValueError as e:
+                print (f"Error: {e}")
+                sys.exit()
         
 
 def png_convert(output_path):
@@ -47,7 +51,7 @@ if os.path.exists(path):
         print(f"{config.image_directory_path} exists")
         os_index = 1
         while os.path.exists(os.path.join(config.image_directory_path, f"TaipanImage{os_index}.png")):
-            print(f"{os_index}")
+            print(f"The file TaipanImage{os_index}.png is taken, moving up 1.")
             os_index += 1
 
             if os_index > 99:
