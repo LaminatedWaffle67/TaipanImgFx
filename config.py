@@ -7,8 +7,9 @@ user_sys = platform.system()
 username = None
 directory_path = None
 image_directory_path = None
-download_image_directory_path = None
+saved_image_directory_path = None
 image_list = []
+saved_image_list = []
 
 if user_sys == "Windows":
     username = os.getenv("USERNAME")
@@ -18,7 +19,7 @@ if user_sys == "Windows":
     
 
     image_directory_path = os.path.join(directory_path, image_folder_path)
-    download_image_directory_path = os.path.join(directory_path, fr"TaipanCode\Fileman\Display\saved_images")
+    saved_image_directory_path = os.path.join(directory_path, fr"TaipanCode\Fileman\Display\saved_images")
 
     if os.path.exists(image_directory_path):
         listed_image_files = os.listdir(image_directory_path)
@@ -39,10 +40,11 @@ elif user_sys == "Darwin":
     image_folder_path = "TaipanCode/Fileman/Display/images"
 
     image_directory_path = os.path.join(directory_path, image_folder_path)
-    download_image_directory_path = os.path.join(directory_path, f"TaipanCode/Fileman/Display/saved_images")
+    saved_image_directory_path = os.path.join(directory_path, f"TaipanCode/Fileman/Display/saved_images")
 
     if os.path.exists(image_directory_path):
         listed_image_files = os.listdir(image_directory_path)
+
         png_images = []
         for image_check in listed_image_files:
             _, ext = os.path.splitext(image_check)
@@ -61,7 +63,7 @@ elif user_sys == "Linux":
     image_folder_path = "TaipanCode/Fileman/Display/images"
 
     image_directory_path = os.path.join(directory_path, image_folder_path)
-    download_image_directory_path = os.path.join(directory_path, f"TaipanCode/Fileman/Display/saved_images")
+    saved_image_directory_path = os.path.join(directory_path, f"TaipanCode/Fileman/Display/saved_images")
     
     if os.path.exists(image_directory_path):
         listed_image_files = os.listdir(image_directory_path)
