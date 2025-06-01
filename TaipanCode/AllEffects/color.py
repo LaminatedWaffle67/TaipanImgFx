@@ -1,7 +1,7 @@
 import pygame, sys, os
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
 sys.path.append(project_root)
-import config, numpy
+import config, numpy, settings
 from rich import print
 
 screen = config.screen
@@ -32,11 +32,11 @@ def np_invert(red_strength: float=1.0, green_strength: float=1.0, blue_strength:
     config.constructor.append(f"color.np_invert({red_strength}, {green_strength}, {blue_strength})\n")
 
 
-def invert(red_strength: int=255, green_strength: int=255, blue_strength: int=255, effect_x_step: int=1, effect_y_step: int=1) -> None:
+def invert(red_strength: int=255, green_strength: int=255, blue_strength: int=255) -> None:
     color_list = []
 
-    for x in range(0, screen_width, effect_x_step):
-        for y in range(0, screen_width, effect_y_step):
+    for x in range(0, screen_width, settings.x_step):
+        for y in range(0, screen_height, settings.y_step):
             red, green, blue, _ = screen.get_at((x, y))
 
             if (red, green, blue) != config.bg_color:
@@ -51,7 +51,8 @@ def invert(red_strength: int=255, green_strength: int=255, blue_strength: int=25
 
                 color_list.append(((red, green, blue), (x, y)))
 
-    screen.fill((config.bg_color))
+    if settings.fill_bg_over_step:
+        screen.fill((config.bg_color))
     for color, pos in color_list:
         screen.set_at((pos), (color))
 
@@ -88,8 +89,8 @@ def np_black_and_white(exclude_red: bool=False, exclude_green: bool=False, exclu
 def black_and_white(exclude_red: bool=False, exclude_green: bool=False, exclude_blue: bool=False) -> None:
     color_list = []
 
-    for x in range(0, screen_width, 1):
-        for y in range(0, screen_height, 1):
+    for x in range(0, screen_width, ):
+        for y in range(0, screen_height, settings.y_step):
             red, green, blue, _ = screen.get_at((x, y))
 
             if (red, green, blue) != config.bg_color:
@@ -102,19 +103,35 @@ def black_and_white(exclude_red: bool=False, exclude_green: bool=False, exclude_
                 color_list.append(((red, green, blue), (x, y)))
 
 
-    screen.fill((config.bg_color))
+    if settings.fill_bg_over_step:
+        screen.fill((config.bg_color))
     for color, pos in color_list:
         screen.set_at((pos), (color))
 
     pygame.display.update()
     config.constructor.append(f"color.black_and_white({exclude_red}, {exclude_green}, {exclude_blue})\n")
 
+def np_isolate():
+    screen_numpy_arr = pygame.surfarray.array3d(screen)
+
+    bg_color_arr = numpy.array(config.bg_color, dtype=screen_numpy_arr.dtype)
+    bg_color_mask = numpy.any(screen_numpy_arr != bg_color_arr, axis=2)
+
+    if screen_numpy_arr[bg_color_mask][..., 0] > screen_numpy_arr[bg_color_mask][..., 1] > screen_numpy_arr[bg_color_mask][..., 2]:
+        brightest_channel = screen_numpy_arr[bg_color_mask][..., 0]
+
+    elif screen_numpy_arr[bg_color_mask][..., 1] > screen_numpy_arr[bg_color_mask][..., 0] > screen_numpy_arr[bg_color_mask][..., 2]:
+        brightest_channel = screen_numpy_arr[bg_color_mask][..., 1]
+
+    elif screen_numpy_arr[bg_color_mask][..., 2] > screen_numpy_arr[bg_color_mask][..., 0] > screen_numpy_arr[bg_color_mask][..., 1]:
+        brightest_channel = screen_numpy_arr[bg_color_mask][..., 2]
+
 
 def isolate(exclude_red: bool=True, exclude_green: bool=False, exclude_blue: bool=False, option_index: int=1):
     color_list = []
 
-    for x in range(0, screen_width, 1):
-        for y in range(0, screen_height, 1):
+    for x in range(0, screen_width, settings.x_step):
+        for y in range(0, screen_height, settings.y_step):
             red, green, blue, _ = screen.get_at((x, y))
 
             if (red, green, blue) != config.bg_color:
@@ -165,7 +182,8 @@ def isolate(exclude_red: bool=True, exclude_green: bool=False, exclude_blue: boo
                 color_list.append(((red, green, blue), (x, y)))
 
 
-    screen.fill((config.bg_color))
+    if settings.fill_bg_over_step:
+        screen.fill((config.bg_color))
     for color, pos in color_list:
         screen.set_at((pos), (color))
 
@@ -194,8 +212,8 @@ def np_contrast():
 def contrast(low_thresh: int=200, high_thresh: int=765, fill_color: tuple=(255, 255, 255), replace_color: tuple=config.bg_color):
     color_list = []
 
-    for x in range(0, screen_width, 1):
-        for y in range(0, screen_width, 1):
+    for x in range(0, screen_width, settings.x_step):
+        for y in range(0, screen_height, settings.y_step):
             red, green, blue, _ = screen.get_at((x, y))
 
             if (red, green, blue) != config.bg_color:
@@ -206,9 +224,56 @@ def contrast(low_thresh: int=200, high_thresh: int=765, fill_color: tuple=(255, 
                 else:
                     color_list.append((replace_color, (x, y)))
 
-    screen.fill((config.bg_color))
+    if settings.fill_bg_over_step:
+        screen.fill((config.bg_color))
     for color, pos in color_list:
         screen.set_at((pos), color)
     pygame.display.update()
     config.constructor.append(f"color.invert({low_thresh}, {high_thresh}, {fill_color}, {replace_color})\n")
 
+
+def converge(red_focus: bool=True, green_focus: bool=False, blue_focus: bool=False, strength: int=255, red_replace_color: int=0, green_replace_color: int=0, blue_replace_color: int=0, option_index: int=1):
+    color_list = []
+
+    for x in range(0, screen_width, settings.x_step):
+        for y in range(0, screen_height, settings.y_step):
+            r, g, b, _ = screen.get_at((x, y))
+
+            brightness = r + g + b
+
+            if (r, g, b) != config.bg_color:
+                norm_brightness = min((brightness / strength), 1)
+                norm_brightness *= strength
+                norm_brightness = int(norm_brightness)
+                
+                if option_index == 1:
+                    if red_focus == True:
+                        r = norm_brightness
+                        g, b = green_replace_color, blue_replace_color
+
+                    elif green_focus == True:
+                        g = norm_brightness
+                        r, b = red_replace_color, blue_replace_color
+
+                    elif blue_focus == True:
+                        b = norm_brightness
+                        r, g = red_replace_color, blue_replace_color
+
+                elif option_index == 2:
+                    if red_focus == True:
+                        r = norm_brightness
+
+                    elif green_focus == True:
+                        g = norm_brightness
+
+                    elif blue_focus == True:
+                        b = norm_brightness
+
+            color_list.append(((x, y), (r, g, b)))
+
+    if settings.fill_bg_over_step:
+        screen.fill((config.bg_color))
+    for pos, color in color_list:
+        screen.set_at(pos, color)
+    pygame.display.update()
+    config.constructor.append(f"color.converge({red_focus}, {green_focus}, {blue_focus}, {strength}, {red_replace_color}, {green_replace_color}, {blue_replace_color}\n")

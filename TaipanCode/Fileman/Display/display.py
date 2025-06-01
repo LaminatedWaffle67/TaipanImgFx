@@ -1,7 +1,7 @@
 import pygame, os, sys
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../.."))
 sys.path.append(project_root)
-import config
+import config, settings
 from TaipanCode.Fileman import storage
 from rich import print
 
@@ -18,8 +18,9 @@ def pygame_display() -> None:
                     try:
                         save_confirmation = int(input("Type 1 to confirm save\n>"))
                         if save_confirmation == 1:
-                            current_stored_image = storage.download_screen()
-                            print (f"Image successfully saved at {current_stored_image}")
+                            storage.download_screen()
+                            print (f"Image successfully saved at additional path {config.saved_image_directory_path}")
+                            print (f"Image successfully saved at additional path {config.additional_save_file_path}")
                     except TypeError:
                         pass
                     

@@ -2,3 +2,6 @@ __pycache__/
 
 images/*
 !images/.gitkeep
+
+saved_images/*
+!saved_images/.gitkeep

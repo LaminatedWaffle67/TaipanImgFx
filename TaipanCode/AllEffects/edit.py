@@ -9,7 +9,7 @@ screen_width, screen_height = config.screen_width, config.screen_height
 def clear(high_thresh: int, fill_color: tuple[int, int, int]=config.bg_color) -> None:
     color_list = []
 
-    for x in range(0, screen_width, 1):
+    for x in range(0, screen_height, 1):
         for y in range(0, screen_width, 1):
             red, green, blue, _ = screen.get_at((x, y))
 
@@ -27,3 +27,9 @@ def clear(high_thresh: int, fill_color: tuple[int, int, int]=config.bg_color) ->
         screen.set_at((pos), (color))
 
     pygame.display.update()
+
+def resize():
+    pass
+
+def translate():
+    pass

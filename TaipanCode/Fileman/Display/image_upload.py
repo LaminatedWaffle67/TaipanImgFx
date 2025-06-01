@@ -8,7 +8,7 @@ import config
 os.system('clear')
 path = input("Input file path\n>")
 
-valid_ext = [".jpeg", ".jpg", ".tiff", ".bmp", ".webp", ".png"]
+valid_ext = [".jpeg", ".jpg", ".tiff", ".bmp", ".webp", ".png", "avif"]
 
 def valid_image():
     _, ext = os.path.splitext(path)

@@ -1,0 +1,1 @@
+['color.np_black_and_white(True, False, True)\n', 'color.converge(True, False, False, 255, 232, 150, 20\n']
