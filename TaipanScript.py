@@ -20,13 +20,12 @@ if image_upload:
     import config
 
 user_input = 1
-image_index = (int(input(f"Input image index from 1 to {config.image_count} or from -1 to -2\n>")), int(input(f"Pick 1 to have a save option and 0 for no option."))) if user_input == 0 else (15, 1)
+image_index = (int(input(f"Input image index from 1 to {config.image_count} or from -1 to -2\n>")), int(input(f"Pick 1 to have a save option and 0 for no option."))) if user_input == 0 else (15, 0)
 
 config.image_index = image_index[0]
 
 config.screen = pygame.display.set_mode((config.screen_width, config.screen_height))
 screen = config.screen
-
 import TaipanCode.AllEffects.edit as edit
 import TaipanCode.AllEffects.color as color
 import TaipanCode.AllEffects.spatial as spatial
@@ -37,10 +36,7 @@ display.load_image()
 '''User input for image handling'''
 
 '''User chosen effects'''
-spatial.transpose(2)
-color.np_black_and_white(True, False, True)
-color.converge(True, False, False, 255, 232, 150, 20, 2)
-spatial.transpose(1)
+color.polarise(True, False, 200, 200, 1)
 '''User chosen effects'''
 
 '''Image displaying'''

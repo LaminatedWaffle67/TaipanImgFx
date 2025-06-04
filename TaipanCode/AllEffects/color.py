@@ -269,7 +269,7 @@ def converge(red_focus: bool=True, green_focus: bool=False, blue_focus: bool=Fal
                     elif blue_focus == True:
                         b = norm_brightness
 
-            color_list.append(((x, y), (r, g, b)))
+                color_list.append(((x, y), (r, g, b)))
 
     if settings.fill_bg_over_step:
         screen.fill((config.bg_color))
@@ -277,3 +277,46 @@ def converge(red_focus: bool=True, green_focus: bool=False, blue_focus: bool=Fal
         screen.set_at(pos, color)
     pygame.display.update()
     config.constructor.append(f"color.converge({red_focus}, {green_focus}, {blue_focus}, {strength}, {red_replace_color}, {green_replace_color}, {blue_replace_color}\n")
+
+
+def np_polarise(red_to_blue: bool=True, blue_to_red: bool=False) -> None:
+    screen_numpy_arr = pygame.surfarray.array3d(screen)
+    
+    bg_numpy_arr = numpy.array(config.bg_color, dtype=numpy.uint8)
+
+    bg_mask = numpy.any(screen_numpy_arr != bg_numpy_arr, axis=2)
+
+
+def polarise(red_to_blue: bool=True, blue_to_red: bool=False, red_fill_color: int=0, blue_fill_color: int=0, option_index: int=1) -> None:
+    color_list = []
+
+    for x in range(0, screen_width, settings.x_step):
+        for y in range(0, screen_height, settings.y_step):
+            red, green, blue, _ = screen.get_at((x, y))
+
+
+            if (red, green, blue) != config.bg_color:
+                if red > blue and red_to_blue:
+                    if option_index == 1:
+                        blue = red
+                        red = red_fill_color
+                    elif option_index == 2:
+                        blue = red
+
+                elif blue > red and blue_to_red:
+                    if option_index == 1:
+                        red = blue
+                        blue = blue_fill_color
+                    elif option_index == 2:
+                        red = blue
+
+                color_list.append(((x, y), (red, green, blue)))
+
+    if settings.fill_bg_over_step:
+        screen.fill((config.bg_color))
+    for pos, color in color_list:
+        screen.set_at(pos, color)
+    pygame.display.update()
+    config.constructor.append(f"color.polarise()")
+
+

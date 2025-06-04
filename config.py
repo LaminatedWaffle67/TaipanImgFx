@@ -5,20 +5,20 @@ import os, platform, sys, settings
 
 bg_color = settings.default_bg
 exlude_colors = [settings.default_exclude_colors] 
-'''cleared'''
 
-user_sys = platform.system()
+user_os = platform.system()
 
 username = None
-taipan_directory_path = None
-image_directory_path = None
-saved_image_directory_path = None
+taipan_root = None
+image_folder_path = None
+image_save_folder_path = None
 additional_save_file_path = None
 
 image_list = []
 saved_image_list = []
+'''cleared'''
 
-if user_sys == "Windows":
+if user_os == "Windows":
     username = os.getenv("USERNAME")
     directory_path = fr"C:\Users\{username}\Desktop\TaipanImgFx"
 
@@ -46,7 +46,7 @@ if user_sys == "Windows":
             image_file_path = os.path.join(image_directory_path, image_path)
             image_list.append(image_file_path)
 
-elif user_sys == "Darwin":
+elif user_os == "Darwin":
     username = os.getenv("USER")
     directory_path = f"/home/{username}/Desktop/TaipanImgFx"
     image_folder_path = "TaipanCode/Fileman/Display/images"
@@ -69,7 +69,7 @@ elif user_sys == "Darwin":
             image_list.append(image_file_path)
 
 
-elif user_sys == "Linux":
+elif user_os == "Linux":
     username = os.getenv("USER")
     directory_path = f"/home/{username}/Desktop/TaipanImgFx"
     image_folder_path = "TaipanCode/Fileman/Display/images"
@@ -132,7 +132,7 @@ elif user_sys == "Linux":
 
 else:
     print (f"[red]Your Operating System is not supported by the software TaipanImgFx !TSE - Taipan System Error![/red]\n")
-    print(f"The Operating System detected was '{user_sys}'")
+    print(f"The Operating System detected was '{user_os}'")
     print("\n---PRE---ERROR---HISTORY---\n")
     try:
         raise ValueError("Unknown user OS, the Operating System your computer is currently running is not compatible with TaipanImgFx, the supported Operating Systems are Windows, MacOS and Linux.")
