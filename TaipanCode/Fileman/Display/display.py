@@ -4,6 +4,7 @@ sys.path.append(project_root)
 import config, settings
 from TaipanCode.Fileman import storage
 from rich import print
+from config import effect_queue
 
 pygame.init()
 
@@ -26,6 +27,11 @@ def pygame_display() -> None:
                     
 
                 running = False
+
+        while not effect_queue.empty():
+            current_effect = effect_queue.get()
+            current_effect()
+
 
     pygame.quit()
 

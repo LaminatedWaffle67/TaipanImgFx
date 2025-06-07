@@ -3,10 +3,12 @@ project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
 sys.path.append(project_root)
 import config
 
-screen = config.screen
-screen_width, screen_height = config.screen_width, config.screen_height
+
 
 def clear(high_thresh: int, fill_color: tuple[int, int, int]=config.bg_color) -> None:
+    print(config.screen)
+    screen = config.screen
+    screen_width, screen_height = config.screen_width, config.screen_height
     color_list = []
 
     for x in range(0, screen_height, 1):

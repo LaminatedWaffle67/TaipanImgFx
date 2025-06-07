@@ -294,21 +294,89 @@ def polarise(red_to_blue: bool=True, blue_to_red: bool=False, red_fill_color: in
         for y in range(0, screen_height, settings.y_step):
             red, green, blue, _ = screen.get_at((x, y))
 
-
             if (red, green, blue) != config.bg_color:
-                if red > blue and red_to_blue:
+                if red > blue:
                     if option_index == 1:
                         blue = red
                         red = red_fill_color
                     elif option_index == 2:
                         blue = red
 
-                elif blue > red and blue_to_red:
+                elif blue > red:
                     if option_index == 1:
                         red = blue
                         blue = blue_fill_color
                     elif option_index == 2:
                         red = blue
+
+                color_list.append(((x, y), (red, green, blue)))
+
+    if settings.fill_bg_over_step:
+        screen.fill((config.bg_color))
+    for pos, color in color_list:
+        screen.set_at(pos, color)
+    pygame.display.update()
+    config.constructor.append(f"color.polarise()")
+
+
+def all_polarise(red_to_blue: bool=True, blue_to_red: bool=False, green_to_red: bool=False, red_to_green: bool=False, green_to_blue: bool=False, blue_to_green: bool=True, red_fill_color: int=0, blue_fill_color: int=0, green_fill_color: int=0, option_index: int=1) -> None:
+    color_list = []
+
+    for x in range(0, screen_width, settings.x_step):
+        for y in range(0, screen_height, settings.y_step):
+            red, green, blue, _ = screen.get_at((x, y))
+
+            if (red, green, blue) != config.bg_color:
+                pre_red = red
+                pre_green = green
+                pre_blue = blue
+
+                if pre_red > green:
+                    if red_to_green:
+                        if option_index == 1:
+                            green = pre_red
+                            red = red_fill_color
+                        elif option_index == 2:
+                            green = pre_red
+
+
+                if pre_red > pre_blue:
+                    if red_to_blue:
+                        if option_index == 1:
+                            blue = pre_red
+                            red = red_fill_color
+                        elif option_index == 2:
+                            blue = pre_red
+
+                if pre_green > pre_red:
+                    if green_to_red:
+                        if option_index == 1:
+                            red = pre_green
+                            green = green_fill_color
+                        elif option_index == 2:
+                            red = pre_green
+
+                if pre_green > pre_blue:
+                    if green_to_blue:
+                        if option_index == 1:
+                            blue = pre_green
+                            green = green_fill_color
+                        elif option_index == 2:
+                            blue = pre_green
+                
+                if pre_blue > pre_red:
+                    if option_index == 1:
+                        red = pre_blue
+                        blue = blue_fill_color
+                    elif option_index == 2:
+                        red = pre_blue
+
+                if pre_blue > pre_green:
+                    if option_index == 1:
+                        green = pre_blue
+                        blue = blue_fill_color
+                    elif option_index == 2:
+                        green = pre_blue
 
                 color_list.append(((x, y), (red, green, blue)))
 
