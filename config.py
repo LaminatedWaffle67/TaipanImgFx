@@ -1,11 +1,13 @@
-import config_logic, settings, queue
+import config_logic, settings, queue, pygame
 
 os_detection_return = config_logic.os_detect()
 
 bg_color = settings.default_bg
 exlude_colors = [settings.default_exclude_colors] 
 
-screen = None
+pygame.init()
+
+screen = pygame.display.set_mode((settings.screen_width, settings.screen_height))
 screen_width = settings.screen_width
 screen_height = settings.screen_height
 

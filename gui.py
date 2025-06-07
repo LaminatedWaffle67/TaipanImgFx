@@ -9,10 +9,12 @@ def enqueue(lambda_func):
 def start_gui():
     # make root window
     root = tk.Tk()
+    root.withdraw()
     # make effect window
     effect_window = tk.Toplevel(root)
     # make button that runs enqueu with lambda for effetc func
     tk.Button(effect_window, text="edit.clear()", command=lambda: enqueue(lambda: edit.clear(255))).pack()
+    tk.Button(effect_window, text="color.np_invert()", command=lambda: enqueue(lambda: color.np_invert())).pack()
     # run mainloop
     root.mainloop()
 
