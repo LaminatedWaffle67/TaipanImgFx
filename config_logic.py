@@ -38,6 +38,39 @@ def os_detect():
                 image_file_path = os.path.join(image_directory_path, image_path)
                 image_list.append(image_file_path)
 
+        else:
+            print (f"[red]Error: You are missing a required folder/file, the path to this folder/file is {image_directory_path} !TFE - Taipan File Error![/red]\n")
+            
+            if input("Input y if you want to reinstate this folder/file to continue despite the error.\n>").lower() == "y":
+                os.makedirs(image_directory_path)
+
+                if os.path.exists(image_directory_path):
+                    listed_image_files = os.listdir(image_directory_path)
+
+                    png_images = []
+                    for image_check in listed_image_files:
+                        _, ext = os.path.splitext(image_check)
+                        if ext.lower() == ".png":
+                            png_images.append(image_check)
+
+                    for image_path in png_images:
+                        image_file_path = os.path.join(image_directory_path, image_path)
+                        image_list.append(image_file_path)
+
+                else:
+                    print (f"[red]Error: The folder/file reinstation failed, the path to this folder/file is {image_directory_path} and it is needed for TaipanImgFx to work properly !TFE - Taipan File Error![/red]\n")
+
+
+            else:
+                print("\n---PRE---ERROR---HISTORY---\n")
+
+                try:
+                    raise ValueError(f"Will add later")
+
+                except ValueError as e:
+                    print (f"Error: {e}")
+                    sys.exit()
+
     elif user_os == "Darwin":
         username = os.getenv("USER")
         directory_path = f"/home/{username}/Desktop/TaipanImgFx"
@@ -59,6 +92,39 @@ def os_detect():
             for image_path in png_images:
                 image_file_path = os.path.join(image_directory_path, image_path)
                 image_list.append(image_file_path)
+
+        else:
+            print (f"[red]Error: You are missing a required folder/file, the path to this folder/file is {image_directory_path} !TFE - Taipan File Error![/red]\n")
+            
+            if input("Input y if you want to reinstate this folder/file to continue despite the error.\n>").lower() == "y":
+                os.makedirs(image_directory_path)
+
+                if os.path.exists(image_directory_path):
+                    listed_image_files = os.listdir(image_directory_path)
+
+                    png_images = []
+                    for image_check in listed_image_files:
+                        _, ext = os.path.splitext(image_check)
+                        if ext.lower() == ".png":
+                            png_images.append(image_check)
+
+                    for image_path in png_images:
+                        image_file_path = os.path.join(image_directory_path, image_path)
+                        image_list.append(image_file_path)
+
+                else:
+                    print (f"[red]Error: The folder/file reinstation failed, the path to this folder/file is {image_directory_path} and it is needed for TaipanImgFx to work properly !TFE - Taipan File Error![/red]\n")
+
+
+            else:
+                print("\n---PRE---ERROR---HISTORY---\n")
+
+                try:
+                    raise ValueError(f"Will add later")
+
+                except ValueError as e:
+                    print (f"Error: {e}")
+                    sys.exit()
 
 
     elif user_os == "Linux":
