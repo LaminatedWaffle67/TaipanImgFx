@@ -11,7 +11,7 @@ screen = pygame.display.set_mode((settings.screen_width, settings.screen_height)
 screen_width = settings.screen_width
 screen_height = settings.screen_height
 
-image_count = None
+image_count = os_detection_return[3]
 image_index = None
 saved_image_count = None
 
@@ -23,6 +23,8 @@ save_option = 0
 constructor = []
 
 image_directory_path = os_detection_return[0]
+saved_image_directory_path = os_detection_return[1]
+additional_save_file_path = os_detection_return[2]
 
 effect_queue = queue.Queue()
 

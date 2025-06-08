@@ -22,9 +22,12 @@ def start_gui():
 
     effect_window = tk.Toplevel(root)
 
-    for name, func_ref in function_names:
-        current_button = tk.Button(effect_window, text=name, command=lambda f=func_ref: enqueue(lambda: f)).pack()
-        current_param_button = tk.Button(effect_window, text="< " + str(name), command=lambda f=func_ref: parameter_button(f)).pack()
+    for i, (name, func_ref) in enumerate(function_names):
+        current_button = tk.Button(effect_window, text=name, command=lambda f=func_ref: enqueue(lambda: f))
+        current_param_button = tk.Button(effect_window, text="<", command=lambda f=func_ref: parameter_button(f))
+
+        current_button.grid(row=i, column=1, padx=5, pady=5)
+        current_param_button.grid(row=i, column=0, padx=5, pady=5)
 
 
     root.mainloop()

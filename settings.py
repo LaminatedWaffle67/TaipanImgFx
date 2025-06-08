@@ -4,7 +4,7 @@ x_step = 1
 y_step = 1
 fill_bg_over_step = True
 
-alpha_test = True
+alpha_test = False
 beta_test = False
 
 sys_traceback_quit = True

@@ -214,6 +214,6 @@ def os_detect():
                 print(f"Error: {e}")
                 sys.exit()
             
-    return [image_directory_path]
+    return [image_directory_path, saved_image_directory_path, additional_save_file_path, len(image_list)]
 
     
