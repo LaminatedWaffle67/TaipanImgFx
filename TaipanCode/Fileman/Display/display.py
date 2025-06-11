@@ -33,6 +33,7 @@ def pygame_display() -> None:
             current_effect()
 
 
+
     pygame.quit()
 
 

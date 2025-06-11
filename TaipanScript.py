@@ -14,7 +14,7 @@ image_upload = 0
 if image_upload:
     import TaipanCode.Fileman.Display.image_upload as upload
 
-user_input = 0
+user_input = 1
 image_index = (int(input(f"Input image index from 1 to {config.image_count} or from -1 to -2\n>")), int(input(f"Pick 1 to have a save option and 0 for no option."))) if user_input == 0 else (15, 0)
 
 config.image_index = image_index[0]

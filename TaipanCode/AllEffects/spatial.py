@@ -21,17 +21,17 @@ def transpose(option_index: int=1) -> None:
                     if brightest_channel == red:
                         green = 255 - blue
                         blue = 255 - green
-                        x_position -= 10
+                        x_position -= red
 
                     elif brightest_channel == green:
                         red = 255 - blue
                         blue = 255 - red
-                        y_position += 10
+                        y_position += green
 
                     elif brightest_channel == blue:
                         red = 255 - green
                         green = 255 - red
-                        y_position -= 10
+                        y_position -= blue
 
                 elif option_index == 2:
                     if brightest_channel == red:
