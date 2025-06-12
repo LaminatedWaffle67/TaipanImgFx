@@ -2,6 +2,26 @@ import tkinter as tk
 import config, threading, queue, inspect, ast, sys
 from TaipanCode.AllEffects import edit, color, spatial
 
+ignore_functions = ['color.print()'] # functions I do not need in the function list
+total_function_list = []
+for name, function in inspect.getmembers(edit, inspect.isfunction):
+    total_function_list.append("edit." + str(name) + "()")
+
+for name, function in inspect.getmembers(color, inspect.isfunction):
+    total_function_list.append("color." + str(name) + "()")
+
+for name, function in inspect.getmembers(spatial, inspect.isfunction):
+    total_function_list.append("spatial." + str(name) + "()")
+
+copy_list = [] # makes a temporary empty list 
+
+for name in total_function_list:
+    if name not in ignore_functions:
+        copy_list.append((name))
+
+total_function_list = copy_list
+
+
 def parameter_button(parent_effect, parameter_index):
     signature = inspect.signature(parent_effect)
     sig_parameters = signature.parameters
@@ -31,11 +51,30 @@ def parameter_button(parent_effect, parameter_index):
 
 
 def enqueue(lambda_func): 
-
     config.effect_queue.put(lambda_func)
 
-function_names = [("edit.clear()", edit.clear), ("color.np_invert()", color.np_invert), ("color.np_black_and_white()", color.np_black_and_white)]
-func_parameter_list = [(), (), ()]
+copy_list = []
+for i in range(len(total_function_list)):
+    iter_str = ""
+    for char in total_function_list[i]:
+        if char != '(' and char != ')':
+            iter_str += char
+
+    copy_list.append(iter_str)
+
+total_function_list = copy_list
+
+copy_list = []
+for name in total_function_list:
+    parent_module, child_func = name.split('.', 1)
+    copy_list.append((name, parent_module, child_func))
+
+total_function_list = copy_list
+
+function_names = [(name, getattr(globals()[p_mod], c_func)) for name, p_mod, c_func in total_function_list]
+func_parameter_list = [None for i in range(len(function_names))]
+
+
 
 def start_gui():
     root = tk.Tk()
