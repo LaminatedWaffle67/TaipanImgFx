@@ -94,7 +94,7 @@ def toggle_buttons(direction_index, button_list, text_label, effect_window):
     global page_number
 
     if direction_index == 1:
-        if (page_number + 1) <= len(button_list):
+        if (page_number + 1) < len(button_list):
             show_page(page_number, page_number + 1, button_list, effect_window)
             page_number += 1
 
