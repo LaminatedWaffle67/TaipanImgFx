@@ -17,8 +17,8 @@ additional_save_file = fr"/home/lewaffle67/Desktop/Edited_birds"
 additional_save_with_constructor = False
 additional_save_file_name = "Edited_bird"
 
-screen_width = 1
-screen_height = 1
+screen_width = 800
+screen_height = 800
 
 image_center_blit = (200, 200)
 
