@@ -110,7 +110,7 @@ def toggle_buttons(direction_index, button_list, text_label, effect_window):
 
 # --Page settings variables--
 page_number = 0
-page_size = 4 - 1
+page_size = 6 - 1
 # --Page settings variables--
 
 
