@@ -75,32 +75,34 @@ function_names = [(name, getattr(globals()[p_mod], c_func)) for name, p_mod, c_f
 func_parameter_list = [None for i in range(len(function_names))]
 
 # --Page button management functions--
-def show_page(old_page_index, page_index, button_list, effect_window):
+def show_page(old_page_index, page_index, button_list, param_button_list, effect_window):
     if old_page_index is not None:
         for current_button in button_list[old_page_index]:
+            current_button.grid_remove()
+
+        for current_button in param_button_list[old_page_index]:
             current_button.grid_remove()
 
     for i, current_button in enumerate(button_list[page_index]):
         current_button.grid(row=i, column=1, padx=5, pady=5)
 
-        func_ref = function_names[i][1]
-        current_param_button = tk.Button(effect_window, text="<", command=lambda f=func_ref, j=i: parameter_button(f, j))
-        current_param_button.grid(row=i, column=0, padx=5, pady=5)
+    for i, current_button in enumerate(param_button_list[page_index]):
+        current_button.grid(row=i, column=0, padx=4, pady=4)
         
 # --Page button management functions--
 
 # --Page management functions--
-def toggle_buttons(direction_index, button_list, text_label, effect_window):
+def toggle_buttons(direction_index, button_list, param_list, text_label, effect_window):
     global page_number
 
     if direction_index == 1:
         if (page_number + 1) < len(button_list):
-            show_page(page_number, page_number + 1, button_list, effect_window)
+            show_page(page_number, page_number + 1, button_list, param_list, effect_window)
             page_number += 1
 
     elif direction_index == 0:
         if (page_number - 1) >= 0:
-            show_page(page_number, page_number - 1, button_list, effect_window)
+            show_page(page_number, page_number - 1, button_list, param_list, effect_window)
             page_number -= 1
 
     text_label.config(text=f"{page_number + 1}/{len(button_list)}")
@@ -120,20 +122,24 @@ def start_gui():
     effect_window = tk.Frame(root)
     effect_window.grid(column=0, row=0)
     button_list = [[]]
+    param_button_list = [[]]
 
     count = -1
     for i, (call, func_ref) in enumerate(function_names):
         current_button = tk.Button(effect_window, text=call, command=lambda f=func_ref, j=i: enqueue(lambda: f() if func_parameter_list[j] == None else print(func_parameter_list[j])))
-        
+        current_button2 = tk.Button(effect_window, text="<", command=lambda f=func_ref, j=i: parameter_button(f, j))
 
         count += 1
         if count <= page_size:
             button_list[-1].append(current_button)
+            param_button_list[-1].append(current_button2)
 
         else:
             count = 0
             button_list.append([])
+            param_button_list.append([])
             button_list[-1].append(current_button)
+            param_button_list[-1].append(current_button2)
 
     
     # --Sets up the page change buttons and page count--
@@ -144,10 +150,10 @@ def start_gui():
     text_label1.grid(column=1, row=0)
 
     def a_dispatcher():
-        toggle_buttons(1, button_list, text_label1, effect_window)
+        toggle_buttons(1, button_list, param_button_list, text_label1, effect_window)
 
     def b_dispatcher():
-        toggle_buttons(0, button_list, text_label1, effect_window)
+        toggle_buttons(0, button_list, param_button_list, text_label1, effect_window)
 
     toggle_btn1 = tk.Button(toggle_frame, text="<", command=b_dispatcher)
     toggle_btn1.grid(column=0, row=0)
@@ -157,7 +163,7 @@ def start_gui():
     # --Sets up the page change buttons and pgae count--
 
     # --Starts the main loop for root which is the main window--
-    show_page(None, page_number, button_list, effect_window)
+    show_page(None, page_number, button_list, param_button_list, effect_window)
     root.mainloop()
     # --Starts the main loop for root which is the main window--
 
