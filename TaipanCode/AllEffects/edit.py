@@ -1,7 +1,7 @@
 import pygame, sys, os
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
 sys.path.append(project_root)
-import config
+import config, settings
 
 def clear(low_thresh: int=0, high_thresh: int=255, fill_color: tuple[int, int, int]=config.bg_color, shade_range: int=0) -> None:
     screen = config.screen
@@ -28,8 +28,8 @@ def clear(low_thresh: int=0, high_thresh: int=255, fill_color: tuple[int, int, i
 
     pygame.display.update()
 
-def resize():
+
+
+def lighten():
     pass
 
-def translate():
-    pass

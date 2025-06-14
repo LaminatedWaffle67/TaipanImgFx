@@ -30,9 +30,11 @@ display.load_image()
 '''User input for image handling'''
 
 '''User chosen effects'''
-if settings.alpha_test:
+if settings.alpha_test == "a":
     threading.Thread(target=gui.start_gui, daemon=True).start()
 
+color.tone_shift(255, 0, False, False, False)
+print("done")
 '''User chosen effects'''
 
 '''Image displaying'''

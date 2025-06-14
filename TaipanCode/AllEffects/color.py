@@ -1,7 +1,7 @@
 import pygame, sys, os
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
 sys.path.append(project_root)
-import config, numpy, settings
+import config, numpy, settings, random
 from rich import print
 
 screen = config.screen
@@ -388,3 +388,38 @@ def all_polarise(red_to_blue: bool=True, blue_to_red: bool=False, green_to_red: 
     config.constructor.append(f"color.polarise()")
 
 
+def tone_shift(low_range: int=10, high_range: int=10, exclude_red: bool=False, exclude_green: bool=False, exclude_blue: bool=False):
+    color_list = []
+
+    for x in range(0, screen_width, settings.x_step):
+        for y in range(0, screen_height, settings.y_step):
+            red, green, blue, _ = screen.get_at((x, y))
+
+            if (red, green, blue) != config.bg_color:
+
+                if not exclude_red:
+                    low_red, high_red  = red - low_range, red + high_range
+                    low_red = numpy.clip(low_red, 0, 255)
+                    high_red = numpy.clip(high_red, 0, 255)
+                    red = random.randint(low_red, high_red)
+
+                if not exclude_green:
+                    low_green, high_green = green - low_range, green + high_range
+                    low_green = numpy.clip(low_green, 0, 255)
+                    high_green = numpy.clip(high_green, 0, 255)
+                    green = random.randint(low_green, green)
+
+                if not exclude_blue:
+                    low_blue, high_blue  = blue - low_range, blue + high_range
+                    low_blue = numpy.clip(low_blue, 0, 255)
+                    high_blue = numpy.clip(high_blue, 0, 255)
+                    blue = random.randint(low_blue, high_blue)
+                
+                color_list.append(((x, y), (red, green, blue)))
+
+    if settings.fill_bg_over_step:
+        screen.fill((config.bg_color))
+    for pos, color in color_list:
+        screen.set_at(pos, color)
+    pygame.display.update()
+    config.constructor.append(f"color.polarise()")

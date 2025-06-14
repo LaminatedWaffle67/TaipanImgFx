@@ -1,7 +1,7 @@
 import pygame, sys, os
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
 sys.path.append(project_root)
-import config
+import config, settings
 
 screen = config.screen
 screen_width, screen_height = config.screen_width, config.screen_height
@@ -56,3 +56,10 @@ def transpose(option_index: int=1) -> None:
     pygame.display.update()
 
 
+def resize(x=settings.screen_width, y=settings.screen_height):
+    screen = config.screen
+    screen = pygame.transform.scale(screen, (x, y))
+    pygame.display.update()
+
+def translate():
+    pass
