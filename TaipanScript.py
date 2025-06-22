@@ -15,7 +15,7 @@ if image_upload:
     import TaipanCode.Fileman.Display.image_upload as upload
 
 user_input = 1
-image_index = (int(input(f"Input image index from 1 to {config.image_count} or from -1 to -2\n>")), int(input(f"Pick 1 to have a save option and 0 for no option."))) if user_input == 0 else (15, 0)
+image_index = (int(input(f"Input image index from 1 to {config.image_count} or from -1 to -2\n>")), int(input(f"Pick 1 to have a save option and 0 for no option."))) if user_input == 0 else (17, 0)
 
 config.image_index = image_index[0]
 screen = config.screen
@@ -33,8 +33,7 @@ display.load_image()
 if settings.alpha_test == "a":
     threading.Thread(target=gui.start_gui, daemon=True).start()
 
-color.tone_shift(255, 0, False, False, False)
-print("done")
+color.new_colorise(100, 3)
 '''User chosen effects'''
 
 '''Image displaying'''

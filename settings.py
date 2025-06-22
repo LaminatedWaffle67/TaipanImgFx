@@ -20,7 +20,9 @@ additional_save_file_name = "Edited_bird"
 screen_width = 800
 screen_height = 800
 
-image_center_blit = (200, 200)
+image_center_blit = (100, 0)
 
 sleep_after_effect = True
 sleep_time = 0.5
+
+gradient_coord = screen_height // 2
