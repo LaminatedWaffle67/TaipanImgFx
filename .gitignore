@@ -1,7 +1,9 @@
-__pycache__/
+**/__pycache__/
 
-images/*
+**/__init__.py
+
+**/images/*
 !images/.gitkeep
 
-saved_images/*
+**/saved_images/*
 !saved_images/.gitkeep
